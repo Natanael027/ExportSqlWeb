@@ -1,0 +1,60 @@
+*.icon-white {color : white}
+*.icon-silver {color : silver}
+*.icon-green {color : green}
+*.icon-dark {color : gray}
+*.icon-red {color : red}
+
+.bg-white {
+  background-color: #FFFFFF;
+ background: white;
+
+}
+.back{
+        margin: 15px;
+        margin-bottom: 5px;
+}
+
+.title{
+        text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+}
+.excel{
+        text-align: right;
+        font-size: 14px;
+        margin-right: 20px;
+}
+
+.header{
+    text-align: center;
+}
+
+.tgl{
+    text-align: right;
+}
+
+.details th{
+    text-align: center;
+}
+
+.details td{
+    text-align: right;
+}
+
+.login{
+     margin: 200px auto;
+}
+
+.logout{
+     text-align: right;
+     margin: 15px;
+}
+
+.flex{
+   display: flex;
+    flex-direction: column;
+}
+
+.inline{
+    display: inline-flex;
+}
