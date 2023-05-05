@@ -32,7 +32,12 @@ dependencies {
 	implementation 'org.webjars:jquery:3.4.1'
 	// https://mvnrepository.com/artifact/org.webjars/webjars-locator-core
 	implementation 'org.webjars:webjars-locator-core'
-	
+	// https://mvnrepository.com/artifact/org.apache.poi/poi
+	implementation 'org.apache.poi:poi:5.2.3'
+// https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+	implementation 'org.apache.poi:poi-ooxml:5.2.3'
+
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'

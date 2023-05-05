@@ -15,9 +15,11 @@
 }
 
 .title{
-        text-align: center;
-            font-size: 24px;
+        text-align: left;
+            font-size: 20px;
             font-weight: bold;
+            margin: 50px;
+
 }
 .excel{
         text-align: right;

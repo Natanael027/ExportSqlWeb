@@ -1,73 +1,50 @@
 package com.projek.Controller;
 
-import com.projek.DAO.DataDao;
-import com.projek.Entity.Data;
+import com.projek.DAO.ExporterDao;
+import com.projek.Entity.Exporter;
+import com.projek.Service.ExporterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class WebController {
     @Autowired
-    private DataDao dao;
+    ExporterService service;
 
     @Autowired
-    public WebController(DataDao dao) {
-        this.dao = dao;
+    ExporterDao dao;
+
+    @GetMapping(value = {"/", "/home"})
+    public String home1(Model map) {
+        Exporter exporter = new Exporter();
+
+        map.addAttribute("export", exporter);
+
+      return "index";
     }
     @GetMapping("/login")
     public String viewLoginPage() {
         return "login";
     }
-    @GetMapping(value = {"/", "/home"})
-    public String home1(Model map, @Param("keyword") String keyword, HttpServletRequest request) {
-        List<Data> results = dao.findDatabyStatus3();
 
-        System.out.println(results.toString());
-        System.out.println(results.size());
-        System.out.println("Session :: "+request.getSession().toString());
+    @PostMapping("/submit")
+    public String submitForm(HttpServletResponse response, Exporter exporter) throws IOException {
+        System.out.println(exporter.toString());
+        List<String> list = new ArrayList<String>(Arrays.asList(exporter.getMsisdn().split(",")));
 
-        map.addAttribute("listResults", results);
-        return "index";
-    }
-    @GetMapping("/update/{id}/{status}")
-    public String updateUserEnabledStatus(@PathVariable("id") Integer id, @PathVariable("status") Integer status,
-                                          RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response)
-    {
-        Data data = dao.findDataById(Long.valueOf(id));
-        System.out.println("enabled :: "+status);
-        System.out.println("req :"+request.getRemoteUser() + " || " + response.getStatus());
-        System.out.println("Session :: "+request.getSession().toString());
+        String queryResult = service.genFileNew(list, exporter.getType());
+        System.out.println("result >>" + queryResult);
 
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
-        String strdate = sdf.format(date);
-
-//        String status = enabled ? "Done" : "On Progress";
-        if (status == 1 ){
-            data.setStatus(1);
-            data.setDescription("Valid by CMS");
-            data.setUpdated_at(strdate);
-            data.setUpdated_by(request.getRemoteUser());
-        } else if (status == 2) {
-            data.setStatus(2);
-            data.setDescription("Not Valid by CMS");
-            data.setUpdated_at(strdate);
-            data.setUpdated_by(request.getRemoteUser());
-        }
-        dao.saveData(data);
-        String message = "Data is Updated";
-        redirectAttributes.addFlashAttribute("message", message);
+        dao.tesInsert(queryResult);
 
         return "redirect:/home";
     }
