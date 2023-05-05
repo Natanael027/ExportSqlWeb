@@ -43,8 +43,12 @@ public class WebController {
 
         String queryResult = service.genFileNew(list, exporter.getType());
         System.out.println("result >>" + queryResult);
+        try {
+            dao.tesInsert(queryResult);
 
-        dao.tesInsert(queryResult);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
         return "redirect:/home";
     }

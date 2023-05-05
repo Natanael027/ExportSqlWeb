@@ -7,7 +7,6 @@ import java.util.List;
 public interface ExporterDao {
     int createCCA();
     int saveCCA();
-
     int tesInsert(String query);
 
 

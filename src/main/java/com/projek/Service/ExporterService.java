@@ -141,10 +141,7 @@ public class ExporterService {
 
             if (prefix == null || prefix.isEmpty()){
                 System.out.println("masuk sini");
-                query = "";
-            }
-            System.out.println(query);
-            if (query!=null){
+            }else {
                 if (i % 2000 == 0) {
                     if (i > 0) {
                         writer.append(";");
@@ -175,6 +172,7 @@ public class ExporterService {
                         queryTable = queryTable + query;
                     }
                 }
+                System.out.println(query);
             }
         }
         writer.append(";");
